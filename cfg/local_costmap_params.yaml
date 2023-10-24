@@ -1,0 +1,13 @@
+local_costmap:
+   global_frame: odom     #centered on the moving robot
+   robot_base_frame: base_link
+   update_frequency: 20.0       #no point to update it at higher freq than your local planner usually at same
+   publish_frequency: 2.0     # for visualization purposes so not to high
+   rolling_window: true
+   width: 8.0
+   height: 8.0                #base on the speed we need to fine tune this params, horizon at which the robot looks 6x6 meters 
+   resolution: 0.05
+   transform_tolerance: 0.5 #maximum amount of latency allowed between tf
+   plugins:
+    - {name: obstacle_layer,      type: "costmap_2d::ObstacleLayer"}
+    - {name: inflation_layer,     type: "costmap_2d::InflationLayer"} #costmaps

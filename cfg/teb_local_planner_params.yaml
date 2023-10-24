@@ -1,0 +1,51 @@
+TebLocalPlannerROS:
+
+  odom_topic: odom      
+  map_frame: /map
+
+  # Trajectory
+
+  teb_autosize: True
+  dt_ref: 0.3
+  dt_hysteresis: 0.1
+  global_plan_overwrite_orientation: True
+  max_global_plan_lookahead_dist: 1.5
+  feasibility_check_no_poses: 8
+
+  # Robot parameters
+
+  max_vel_x: 0.3  # max forward velocity for the planner(not for the robot(can be higher))
+  max_vel_x_backwards: 0.2  # max backwards velocity
+  max_vel_y: 0.0  # max y velocity for  robot (this case diff drive so 0) 
+  max_vel_theta: 0.3  # max angular velocity
+  acc_lim_x: 0.3  # forward acceleration limit
+  acc_lim_theta: 0.3  # angular acceleration limit
+  acc_lim_y: 0.0  # y acceleration limit for diff drive robot
+
+  # GoalTolerance
+
+  xy_goal_tolerance: 0.1        #if not keep overshooting the finla goal so we keep moving around the goal
+  yaw_goal_tolerance: 0.1
+  free_goal_vel: False
+
+  # Footprint model  type of robot(size corners)
+  
+  footprint_model:
+    type: "polygon"
+    vertices: [[-0.3, -0.2], [-0.3, 0.2], [0.3, 0.2], [0.3, -0.2] ]  # replace these with your robot's dimensions
+
+  # Obstace avoidance
+  min_obstacle_dist: 0.5  # this is the minimum distance from obstacles, change it as needed. we dont trust the localzion algo so we want a min distance in which we are not going to plan there
+  obstacle_association_force_inclusion_factor: 3
+  include_costmap_obstacles: True
+  costmap_obstacles_behind_robot_dist: 1.5
+  obstacle_poses_affected: 30
+  costmap_converter_plugin: ""
+  costmap_converter_spin_thread: True
+  costmap_converter_rate: 5
+
+  # optimization parameters
+  weight_kinematics_forward_drive: 10 #1 defualt higher this the more the robot don't move backwards
+  weight_obstacle: 50               #50 weight to keep a min dist from obstacles
+  weight_viapoint: 1               #1 distance from global viapoints
+  weight_inflation: 0.5             #0.1 inflation layer must be small
